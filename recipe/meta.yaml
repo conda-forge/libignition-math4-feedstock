@@ -1,5 +1,5 @@
 {% set base_name = "libignition-math" %}
-{% set version = "6.2.0" %}
+{% set version = "6.4.0" %}
 {% set name = base_name + version.split('.')[0] %}
 
 package:
@@ -8,7 +8,7 @@ package:
 
 source:
   - url: https://bitbucket.org/ignitionrobotics/ign-math/get/ignition-math{{ version.split('.')[0] }}_{{ version }}.tar.gz
-    sha256: 911594a3540b913246e36bad5f96e3d85fb9e8c746ee7879b262aca674ba8e00
+    sha256: 5b9835f07771946dbc051c4677928bf578a874464d8ada1d6b4d6fa5881e5427
 
 build:
   number: 0

@@ -26,8 +26,10 @@ requirements:
     - cmake
   host:
     - libignition-cmake2
+    - eigen
   run:
     - libignition-cmake2
+    - eigen
 
 test:
   commands:

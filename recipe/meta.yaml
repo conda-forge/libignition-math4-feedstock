@@ -7,11 +7,11 @@ package:
   version: {{ version }}
 
 source:
-  - url: https://bitbucket.org/ignitionrobotics/ign-math/get/ignition-math{{ version.split('.')[0] }}_{{ version }}.tar.gz
-    sha256: 5b9835f07771946dbc051c4677928bf578a874464d8ada1d6b4d6fa5881e5427
+  - url: https://github.com/ignitionrobotics/ign-math/archive/ignition-math{{ version.split('.')[0] }}_{{ version }}.tar.gz
+    sha256: 2961b295c61c7536a10b4e87c1fb812d111ee923e1c83bb6a42dede7d76373c5
 
 build:
-  number: 1
+  number: 2
   skip: true  # [win and vc<14]
   run_exports:
     - {{ pin_subpackage(name, max_pin='x.x') }}

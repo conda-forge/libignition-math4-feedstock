@@ -9,6 +9,8 @@ package:
 source:
   - url: https://github.com/ignitionrobotics/ign-math/archive/ignition-math{{ version.split('.')[0] }}_{{ version }}.tar.gz
     sha256: 8fd06206e7e3d28a9c8ff54f7c9eaa3f01178170bd31ad57c6bc672ecb0c3645
+    patches:
+      - cctype_include.patch
 
 build:
   number: 0

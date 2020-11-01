@@ -5,11 +5,9 @@ Home: https://bitbucket.org/ignitionrobotics/ign-math
 
 Package license: Apache-2.0
 
-Feedstock license: BSD-3-Clause
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/libignition-math4-feedstock/blob/master/LICENSE.txt)
 
 Summary: Ignition Math : Math classes and functions for robot applications
-
-
 
 Current build status
 ====================

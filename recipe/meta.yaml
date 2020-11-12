@@ -45,7 +45,7 @@ test:
     - if exist %PREFIX%\\Library\\lib\\cmake\\ignition-math6\\ignition-math6-config.cmake (exit 0) else (exit 1)  # [win]
 
 about:
-  home: https://bitbucket.org/ignitionrobotics/ign-math
+  home: https://github.com/ignitionrobotics/ign-math
   license: Apache-2.0
   license_file: LICENSE
   summary: 'Ignition Math : Math classes and functions for robot applications'

@@ -1,7 +1,7 @@
 About libignition-math6
 =======================
 
-Home: https://bitbucket.org/ignitionrobotics/ign-math
+Home: https://github.com/ignitionrobotics/ign-math
 
 Package license: Apache-2.0
 

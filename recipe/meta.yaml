@@ -9,9 +9,6 @@ package:
 source:
   - url: https://github.com/ignitionrobotics/ign-math/archive/ignition-math{{ version.split('.')[0] }}_{{ version }}.tar.gz
     sha256: 8456af51cbb128d7468d65b55124af7a235f052214ac2a239c3f23197416f2d2
-    patches:
-      # Backport of https://github.com/ignitionrobotics/ign-math/pull/180
-      -  fix-stream-error.patch 
 
 build:
   number: 1

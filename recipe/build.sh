@@ -12,4 +12,5 @@ cmake .. \
 cmake --build . --config Release
 cmake --build . --config Release --target install
 # UNIT_Pose_TEST excluded as a temporary workaround for https://github.com/ignitionrobotics/ign-math/issues/161
-ctest --output-on-failure -C Release -E "INTEGRATION|PERFORMANCE|REGRESSION|UNIT_Pose_TEST"
+# UNIT_SpeedLimiter_TEST excluded as a workaround for https://github.com/ignitionrobotics/ign-math/issues/203
+ctest --output-on-failure -C Release -E "INTEGRATION|PERFORMANCE|REGRESSION|UNIT_Pose_TEST|UNIT_SpeedLimiter_TEST"

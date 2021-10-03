@@ -1,0 +1,42 @@
+From 9a9140107303626d22e55f9494e61673894c0dfd Mon Sep 17 00:00:00 2001
+From: Silvio Traversaro <silvio.traversaro@iit.it>
+Date: Sun, 3 Oct 2021 11:43:28 +0200
+Subject: [PATCH] Disable FAKE_INSTALL
+
+---
+ test/CMakeLists.txt | 22 ----------------------
+ 1 file changed, 22 deletions(-)
+
+diff --git a/test/CMakeLists.txt b/test/CMakeLists.txt
+index 03553029..2b2600c8 100644
+--- a/test/CMakeLists.txt
++++ b/test/CMakeLists.txt
+@@ -20,27 +20,5 @@ execute_process(COMMAND cmake -E remove_directory ${CMAKE_BINARY_DIR}/test_resul
+ execute_process(COMMAND cmake -E make_directory ${CMAKE_BINARY_DIR}/test_results)
+ include_directories(${GTEST_INCLUDE_DIRS})
+ 
+-#============================================================================
+-# Do a fake install of ign-math in order to test the examples.
+-#============================================================================
+-# install to FAKE_INSTALL_PREFIX defined in root CMakeLists.txt
+-
+-file(MAKE_DIRECTORY ${FAKE_INSTALL_PREFIX})
+-
+-include(ExternalProject)
+-ExternalProject_Add(
+-  FAKE_INSTALL
+-
+-  SOURCE_DIR "${CMAKE_SOURCE_DIR}"
+-  EXCLUDE_FROM_ALL 1
+-  LOG_CONFIGURE 1
+-  LOG_BUILD 1
+-  LOG_INSTALL 1
+-  CMAKE_ARGS
+-    "-DBUILD_TESTING=OFF"
+-    "-DCMAKE_INSTALL_PREFIX=${FAKE_INSTALL_PREFIX}"
+-)
+-
+-add_subdirectory(integration)
+ add_subdirectory(performance)
+ add_subdirectory(regression)
+ 

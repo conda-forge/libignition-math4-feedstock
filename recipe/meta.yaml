@@ -1,5 +1,5 @@
 {% set base_name = "libignition-math" %}
-{% set version = "6.8.0" %}
+{% set version = "6.9.0" %}
 {% set name = base_name + version.split('.')[0] %}
 
 package:
@@ -8,7 +8,9 @@ package:
 
 source:
   - url: https://github.com/ignitionrobotics/ign-math/archive/ignition-math{{ version.split('.')[0] }}_{{ version }}.tar.gz
-    sha256: 07c4fa9eeaa51fe2b4ee2855ea69bb16571d7e6c315b8b0726fc4383b64303a1
+    sha256: 80b7788c02df5a28333780d1049d5a84059fd969365cefd5476021c355916b3b
+    patches:
+      - disable_fake_install.patch  # ["linux-aarch64" == target_platform]
 
 build:
   number: 0

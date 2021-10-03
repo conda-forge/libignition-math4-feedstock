@@ -104,6 +104,7 @@ Installing `libignition-math6` from the `conda-forge` channel can be achieved by
 
 ```
 conda config --add channels conda-forge
+conda config --set channel_priority strict
 ```
 
 Once the `conda-forge` channel has been enabled, `libignition-math6` can be installed with:

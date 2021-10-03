@@ -9,6 +9,8 @@ package:
 source:
   - url: https://github.com/ignitionrobotics/ign-math/archive/ignition-math{{ version.split('.')[0] }}_{{ version }}.tar.gz
     sha256: 80b7788c02df5a28333780d1049d5a84059fd969365cefd5476021c355916b3b
+    patches:
+      - disable_fake_install.patch  # ["linux-aarch64" == target_platform]
 
 build:
   number: 0

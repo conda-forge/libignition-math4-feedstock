@@ -13,7 +13,7 @@ source:
       - disable_fake_install.patch  # ["linux-aarch64" == target_platform]
 
 build:
-  number: 0
+  number: 1
   run_exports:
     - {{ pin_subpackage(name, max_pin='x') }}
 
@@ -36,10 +36,10 @@ test:
     - test -f ${PREFIX}/lib/libignition-math6.so  # [linux]
     - test -f ${PREFIX}/lib/libignition-math6.dylib  # [osx]
     - test -f ${PREFIX}/lib/cmake/ignition-math6/ignition-math6-config.cmake  # [not win]
-    - if exist %PREFIX%\\Library\\include\\ignition\\math6\\ignition\\math.hh (exit 0) else (exit 1)  # [win]
-    - if exist $PREFIX$\\Library\\lib\\ignition-math6.lib (exit 0) else (exit 1)  # [win]
-    - if exist $PREFIX$\\Library\\bin\\ignition-math6.dll (exit 0) else (exit 1)  # [win]
-    - if exist %PREFIX%\\Library\\lib\\cmake\\ignition-math6\\ignition-math6-config.cmake (exit 0) else (exit 1)  # [win]
+    - if not exist %PREFIX%\\Library\\include\\ignition\\math6\\ignition\\math.hh (exit 1)  # [win]
+    - if not exist $PREFIX$\\Library\\lib\\ignition-math6.lib (exit 1)  # [win]
+    - if not exist $PREFIX$\\Library\\bin\\ignition-math6.dll (exit 1)  # [win]
+    - if not exist %PREFIX%\\Library\\lib\\cmake\\ignition-math6\\ignition-math6-config.cmake (exit 1)  # [win]
 
 about:
   home: https://github.com/ignitionrobotics/ign-math

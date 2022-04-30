@@ -1,0 +1,23 @@
+From dd1abe8b44160a75a7eaf532c7bf3b68c07ec21d Mon Sep 17 00:00:00 2001
+From: ahcorde <ahcorde@gmail.com>
+Date: Mon, 7 Mar 2022 15:32:24 +0100
+Subject: [PATCH 1/2] Fixed Jammy CI
+
+Signed-off-by: ahcorde <ahcorde@gmail.com>
+---
+ CMakeLists.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 1f8ed5f3..52a9572e 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -80,6 +80,7 @@ else()
+   message (STATUS "Searching for Python - found version ${PYTHONLIBS_VERSION_STRING}.")
+ 
+   set(PYBIND11_PYTHON_VERSION 3)
++  find_package(Python3 QUIET COMPONENTS Interpreter Development)
+   find_package(pybind11 2.2 QUIET)
+ 
+   if (${pybind11_FOUND})
+

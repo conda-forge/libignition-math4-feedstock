@@ -11,6 +11,7 @@ source:
     sha256: 9e00284cd6d51afe190165b2b44258e19bd4a28781cbacf21fd6b0bae43c16aa
     patches:
       - disable_fake_install.patch  # ["linux-aarch64" == target_platform]
+      - 384.patch
 
 build:
   number: 1

@@ -44,6 +44,8 @@ test:
     - if exist $PREFIX$\\Library\\lib\\ignition-math6.lib (exit 0) else (exit 1)  # [win]
     - if exist $PREFIX$\\Library\\bin\\ignition-math6.dll (exit 0) else (exit 1)  # [win]
     - if exist %PREFIX%\\Library\\lib\\cmake\\ignition-math6\\ignition-math6-config.cmake (exit 0) else (exit 1)  # [win]
+  imports:
+    - ignition.math
 
 about:
   home: https://github.com/ignitionrobotics/ign-math

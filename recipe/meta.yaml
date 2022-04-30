@@ -13,7 +13,7 @@ source:
       - disable_fake_install.patch  # ["linux-aarch64" == target_platform]
 
 build:
-  number: 0
+  number: 1
   run_exports:
     - {{ pin_subpackage(name, max_pin='x') }}
 
@@ -26,6 +26,9 @@ requirements:
   host:
     - libignition-cmake2
     - eigen
+    - python
+    - pybind11
+    - pybind11-abi
   run:
     - libignition-cmake2
     - eigen

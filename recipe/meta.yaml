@@ -12,6 +12,7 @@ source:
     patches:
       - disable_fake_install.patch  # ["linux-aarch64" == target_platform]
       - 384.patch
+      - workaround3081pybind11.patch
 
 build:
   number: 1

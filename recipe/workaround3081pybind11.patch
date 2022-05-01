@@ -1,0 +1,35 @@
+From 3e2e51dfee82a70e4b831ebea4118acd0d88993f Mon Sep 17 00:00:00 2001
+From: Silvio Traversaro <silvio.traversaro@iit.it>
+Date: Sun, 1 May 2022 14:59:09 +0200
+Subject: [PATCH] Workaround for https://github.com/pybind/pybind11/issues/3081
+
+---
+ src/python_pybind11/CMakeLists.txt | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/src/python_pybind11/CMakeLists.txt b/src/python_pybind11/CMakeLists.txt
+index 22adef2d..2d14ef7c 100644
+--- a/src/python_pybind11/CMakeLists.txt
++++ b/src/python_pybind11/CMakeLists.txt
+@@ -7,7 +7,7 @@ endif()
+ 
+ message(STATUS "Building pybind11 interfaces")
+ # Split from main extension and converted to pybind11
+-pybind11_add_module(math SHARED
++add_library(math SHARED
+   src/_ignition_math_pybind11.cc
+   src/Angle.cc
+   src/AxisAlignedBox.cc
+@@ -48,9 +48,11 @@ pybind11_add_module(math SHARED
+ )
+ 
+ target_link_libraries(math PRIVATE
+-  ${PROJECT_LIBRARY_TARGET_NAME}
++  ${PROJECT_LIBRARY_TARGET_NAME} pybind11::module
+ )
+ 
++pybind11_extension(math)
++
+ if(USE_SYSTEM_PATHS_FOR_PYTHON_INSTALLATION)
+   if(${CMAKE_VERSION} VERSION_LESS "3.12.0")
+     execute_process(

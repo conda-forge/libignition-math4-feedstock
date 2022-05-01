@@ -22,5 +22,5 @@ if errorlevel 1 exit 1
 
 :: Test.
 :: Skip StopWatch_TEST.py and Matrix3_TEST.py as workaround for https://github.com/ignitionrobotics/ign-math/issues/416
-ctest -C Release -E "INTEGRATION|PERFORMANCE|REGRESSION|StopWatch_TEST.py|Matrix3_TEST.py"
+ctest --output-on-failure -C Release -E "INTEGRATION|PERFORMANCE|REGRESSION|StopWatch_TEST.py|Matrix3_TEST.py"
 if errorlevel 1 exit 1

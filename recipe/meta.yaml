@@ -11,9 +11,11 @@ source:
     sha256: 9e00284cd6d51afe190165b2b44258e19bd4a28781cbacf21fd6b0bae43c16aa
     patches:
       - disable_fake_install.patch  # ["linux-aarch64" == target_platform]
+      - 384.patch
+      - workaround3081pybind11.patch  # [osx]
 
 build:
-  number: 0
+  number: 1
   run_exports:
     - {{ pin_subpackage(name, max_pin='x') }}
 
@@ -23,12 +25,20 @@ requirements:
     - {{ compiler('c') }}
     - make                               # [not win]
     - cmake
+    - python                                 # [build_platform != target_platform]
+    - cross-python_{{ target_platform }}     # [build_platform != target_platform]
+    - pybind11                               # [build_platform != target_platform]
+    - pybind11-abi                           # [build_platform != target_platform]
   host:
     - libignition-cmake2
     - eigen
+    - python
+    - pybind11
+    - pybind11-abi
   run:
     - libignition-cmake2
     - eigen
+    - python
 
 test:
   commands:
@@ -40,6 +50,8 @@ test:
     - if exist $PREFIX$\\Library\\lib\\ignition-math6.lib (exit 0) else (exit 1)  # [win]
     - if exist $PREFIX$\\Library\\bin\\ignition-math6.dll (exit 0) else (exit 1)  # [win]
     - if exist %PREFIX%\\Library\\lib\\cmake\\ignition-math6\\ignition-math6-config.cmake (exit 0) else (exit 1)  # [win]
+  imports:
+    - ignition.math
 
 about:
   home: https://github.com/ignitionrobotics/ign-math

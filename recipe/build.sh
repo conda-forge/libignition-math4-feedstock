@@ -7,7 +7,10 @@ cmake ${CMAKE_ARGS} .. \
       -DCMAKE_BUILD_TYPE=Release \
       -DCMAKE_PREFIX_PATH=$PREFIX -DCMAKE_INSTALL_PREFIX=$PREFIX \
       -DCMAKE_INSTALL_LIBDIR=lib \
-      -DCMAKE_INSTALL_SYSTEM_RUNTIME_LIBS_SKIP=True
+      -DCMAKE_INSTALL_SYSTEM_RUNTIME_LIBS_SKIP=True \
+      -DUSE_SYSTEM_PATHS_FOR_PYTHON_INSTALLATION:BOOL=ON \
+      -DPython3_EXECUTABLE:PATH=$PYTHON \
+      -DPYTHON_EXECUTABLE:PATH=$PYTHON
 
 cmake --build . --config Release
 cmake --build . --config Release --target install

@@ -16,6 +16,6 @@ cmake --build . --config Release
 cmake --build . --config Release --target install
 # UNIT_Pose_TEST excluded as a temporary workaround for https://github.com/ignitionrobotics/ign-math/issues/161
 # UNIT_SpeedLimiter_TEST excluded as a workaround for https://github.com/ignitionrobotics/ign-math/issues/203
-if [[ "${CONDA_BUILD_CROSS_COMPILATION}" != "1" ]]; then
+if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || "${CROSSCOMPILING_EMULATOR}" != "" ]]; then
 ctest --output-on-failure -C Release -E "INTEGRATION|PERFORMANCE|REGRESSION|UNIT_Pose_TEST|UNIT_SpeedLimiter_TEST"
 fi

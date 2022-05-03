@@ -12,6 +12,8 @@ cmake ^
     %SRC_DIR%
 if errorlevel 1 exit 1
 
+type CMakeCache.txt
+
 :: Build.
 cmake --build . --config Release
 if errorlevel 1 exit 1

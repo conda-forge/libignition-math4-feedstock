@@ -40,3 +40,29 @@ index 03553029..2b2600c8 100644
  add_subdirectory(performance)
  add_subdirectory(regression)
  
+From b8d3fa8dd71804a6d95b52c8595094221cd21a91 Mon Sep 17 00:00:00 2001
+From: Silvio Traversaro <pegua1@gmail.com>
+Date: Tue, 17 May 2022 11:23:08 +0200
+Subject: [PATCH] Update CMakeLists.txt
+
+---
+ src/python_pybind11/CMakeLists.txt | 5 -----
+ 1 file changed, 5 deletions(-)
+
+diff --git a/src/python_pybind11/CMakeLists.txt b/src/python_pybind11/CMakeLists.txt
+index 22adef2d..4e828b67 100644
+--- a/src/python_pybind11/CMakeLists.txt
++++ b/src/python_pybind11/CMakeLists.txt
+@@ -145,11 +145,6 @@ if (BUILD_TESTING)
+     add_test(NAME ${test}.py COMMAND
+       "${PYTHON_EXECUTABLE}" "${CMAKE_SOURCE_DIR}/src/python_pybind11/test/${test}.py")
+ 
+-    set(_env_vars)
+-    list(APPEND _env_vars "PYTHONPATH=${FAKE_INSTALL_PREFIX}/lib/python/")
+-    list(APPEND _env_vars "LD_LIBRARY_PATH=${FAKE_INSTALL_PREFIX}/lib:$ENV{LD_LIBRARY_PATH}")
+-    set_tests_properties(${test}.py PROPERTIES
+-      ENVIRONMENT "${_env_vars}")
+   endforeach()
+ 
+ endif()
+ 

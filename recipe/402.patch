@@ -1,0 +1,125 @@
+From 76ffaee33e93c3efd2b823fce7debafa648c000a Mon Sep 17 00:00:00 2001
+From: Bi0T1N <Bi0T1N@users.noreply.github.com>
+Date: Sat, 2 Apr 2022 18:50:23 +0200
+Subject: [PATCH 1/3] Remove PYTHON_LIBRARIES variable for WIN32 debug
+
+there is no equivalent variable in the new FindPython3
+module that provides the path to debug libraries
+
+Signed-off-by: Bi0T1N <Bi0T1N@users.noreply.github.com>
+---
+ src/python_pybind11/CMakeLists.txt | 7 -------
+ 1 file changed, 7 deletions(-)
+
+diff --git a/src/python_pybind11/CMakeLists.txt b/src/python_pybind11/CMakeLists.txt
+index 6e8a6d8a..6a222a68 100644
+--- a/src/python_pybind11/CMakeLists.txt
++++ b/src/python_pybind11/CMakeLists.txt
+@@ -1,10 +1,3 @@
+-if(WIN32 AND CMAKE_BUILD_TYPE STREQUAL "Debug")
+-  # pybind11 logic for setting up a debug build when both a debug and release
+-  # python interpreter are present in the system seems to be pretty much broken.
+-  # This works around the issue.
+-  set(PYTHON_LIBRARIES "${PYTHON_DEBUG_LIBRARIES}")
+-endif()
+-
+ message(STATUS "Building pybind11 interfaces")
+ # Split from main extension and converted to pybind11
+ pybind11_add_module(math SHARED
+
+From c8acd0e18b7c619a149bc6837cf33fbef32843c1 Mon Sep 17 00:00:00 2001
+From: Bi0T1N <Bi0T1N@users.noreply.github.com>
+Date: Sat, 2 Apr 2022 18:51:43 +0200
+Subject: [PATCH 2/3] Migrate to variables from FindPython3
+
+Signed-off-by: Bi0T1N <Bi0T1N@users.noreply.github.com>
+---
+ src/python_pybind11/CMakeLists.txt | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
+
+diff --git a/src/python_pybind11/CMakeLists.txt b/src/python_pybind11/CMakeLists.txt
+index 6a222a68..48b35122 100644
+--- a/src/python_pybind11/CMakeLists.txt
++++ b/src/python_pybind11/CMakeLists.txt
+@@ -43,17 +43,15 @@ target_link_libraries(math PRIVATE
+ )
+ 
+ if(USE_SYSTEM_PATHS_FOR_PYTHON_INSTALLATION)
++  # Get install variable from Python3 module
+   if(${CMAKE_VERSION} VERSION_LESS "3.12.0")
++    # Python3_SITEARCH is available via FindPython3 from 3.12 on, workaround if needed
+     execute_process(
+-      COMMAND "${PYTHON_EXECUTABLE}" -c "if True:
++      COMMAND "${Python3_EXECUTABLE}" -c "if True:
+   from distutils import sysconfig as sc
+   print(sc.get_python_lib(plat_specific=True))"
+       OUTPUT_VARIABLE Python3_SITEARCH
+       OUTPUT_STRIP_TRAILING_WHITESPACE)
+-  else()
+-    # Get install variable from Python3 module
+-    # Python3_SITEARCH is available from 3.12 on, workaround if needed:
+-    find_package(Python3 COMPONENTS Interpreter)
+   endif()
+ 
+   if(USE_DIST_PACKAGES_FOR_PYTHON)
+@@ -132,7 +130,7 @@ if (BUILD_TESTING)
+ 
+   foreach (test ${python_tests})
+     add_test(NAME ${test}.py COMMAND
+-      "${PYTHON_EXECUTABLE}" "${CMAKE_SOURCE_DIR}/src/python_pybind11/test/${test}.py")
++      "${Python3_EXECUTABLE}" "${CMAKE_SOURCE_DIR}/src/python_pybind11/test/${test}.py")
+ 
+     set(_env_vars)
+     list(APPEND _env_vars "PYTHONPATH=${FAKE_INSTALL_PREFIX}/lib/python/")
+
+From d9a2a5cced8aa5a118041c638904020e777fec4b Mon Sep 17 00:00:00 2001
+From: Bi0T1N <Bi0T1N@users.noreply.github.com>
+Date: Sat, 2 Apr 2022 19:13:23 +0200
+Subject: [PATCH 3/3] Improve detection of Python3 for pybind11
+
+- cannot use IgnPython because it doesn't allow to
+specify the components to be found
+- old code probably don't work on old CMake versions < 3.12
+as the required FindPython3 module doesn't exist
+
+Signed-off-by: Bi0T1N <Bi0T1N@users.noreply.github.com>
+---
+ CMakeLists.txt | 22 +++++++++++++++-------
+ 1 file changed, 15 insertions(+), 7 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 87711fc1..226360d5 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -71,16 +71,24 @@ endif()
+ 
+ ########################################
+ # Python bindings
+-include(IgnPython)
+-find_package(PythonLibs QUIET)
+-if (NOT PYTHONLIBS_FOUND)
+-  IGN_BUILD_WARNING("Python is missing: Python interfaces are disabled.")
+-  message (STATUS "Searching for Python - not found.")
++#include(IgnPython) TODO: allow to specify for what it should search and then
++# the code below can be removed; e.g. pybind needs Interpreter and Development components
++# see https://pybind11.readthedocs.io/en/stable/cmake/index.html#new-findpython-mode
++if(${CMAKE_VERSION} VERSION_LESS "3.12.0")
++  find_package(PythonLibs QUIET)
++  set(Python3_FOUND ${PYTHONLIBS_FOUND})
++  set(Python3_VERSION ${PYTHONLIBS_VERSION_STRING})
+ else()
+-  message (STATUS "Searching for Python - found version ${PYTHONLIBS_VERSION_STRING}.")
++  find_package(Python3 QUIET COMPONENTS Interpreter Development)
++endif()
++
++if (NOT Python3_FOUND)
++  IGN_BUILD_WARNING("Python3 is missing: Python interfaces are disabled.")
++  message (STATUS "Searching for Python3 - not found.")
++else()
++  message (STATUS "Searching for Python3 - found version ${Python3_VERSION}.")
+ 
+   set(PYBIND11_PYTHON_VERSION 3)
+-  find_package(Python3 QUIET COMPONENTS Interpreter Development)
+   find_package(pybind11 2.2 QUIET)
+ 
+   if (${pybind11_FOUND})

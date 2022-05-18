@@ -13,6 +13,7 @@ source:
       - disable_fake_install.patch  # ["linux-aarch64" == target_platform]
       - disable_fake_install.patch  # [win]
       - workaround3081pybind11.patch  # [osx]
+      - 402.patch
 
 build:
   number: 2

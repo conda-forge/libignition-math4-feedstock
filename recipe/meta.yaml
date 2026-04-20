@@ -1,5 +1,5 @@
 {% set base_name = "libignition-math" %}
-{% set version = "6.15.1" %}
+{% set version = "6.16.0" %}
 {% set name = base_name + version.split('.')[0] %}
 
 package:
@@ -8,14 +8,14 @@ package:
 
 source:
   - url: https://github.com/ignitionrobotics/ign-math/archive/ignition-math{{ version.split('.')[0] }}_{{ version }}.tar.gz
-    sha256: 07694da90f13da4e577fd403094f0a6879156ec6400309e9d89bc27d57bce664
+    sha256: 1671c090f54ad7c73b2b89210698ab9d55785df32ca2f09a9260ccf9170be399
     patches:
       - disable_fake_install.patch  # ["linux-aarch64" == target_platform]
       - disable_fake_install.patch  # [win]
       - workaround3081pybind11.patch  # [osx]
 
 build:
-  number: 4
+  number: 0
   run_exports:
     - {{ pin_subpackage(name, max_pin='x') }}
 

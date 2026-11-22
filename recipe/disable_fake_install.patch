@@ -1,8 +1,7 @@
 diff --git a/test/CMakeLists.txt b/test/CMakeLists.txt
-index 03553029..2b2600c8 100644
 --- a/test/CMakeLists.txt
 +++ b/test/CMakeLists.txt
-@@ -20,27 +20,5 @@ execute_process(COMMAND cmake -E remove_directory ${CMAKE_BINARY_DIR}/test_resul
+@@ -20,28 +20,6 @@
  execute_process(COMMAND cmake -E make_directory ${CMAKE_BINARY_DIR}/test_results)
  include_directories(${GTEST_INCLUDE_DIRS})
  
@@ -27,17 +26,16 @@ index 03553029..2b2600c8 100644
 -    "-DCMAKE_INSTALL_PREFIX=${FAKE_INSTALL_PREFIX}"
 -)
 -
+ add_subdirectory(benchmark)
 -add_subdirectory(integration)
  add_subdirectory(performance)
  add_subdirectory(regression)
-
 diff --git a/src/python_pybind11/CMakeLists.txt b/src/python_pybind11/CMakeLists.txt
-index 22adef2d..4e828b67 100644
 --- a/src/python_pybind11/CMakeLists.txt
 +++ b/src/python_pybind11/CMakeLists.txt
-@@ -145,11 +145,6 @@ if (BUILD_TESTING)
-     add_test(NAME ${test}.py COMMAND
-       "${PYTHON_EXECUTABLE}" "${CMAKE_SOURCE_DIR}/src/python_pybind11/test/${test}.py")
+@@ -172,11 +172,6 @@
+         "${Python3_EXECUTABLE}" "${CMAKE_SOURCE_DIR}/src/python_pybind11/test/${test}.py")
+     endif()
  
 -    set(_env_vars)
 -    list(APPEND _env_vars "PYTHONPATH=${FAKE_INSTALL_PREFIX}/lib/python/")
@@ -47,4 +45,3 @@ index 22adef2d..4e828b67 100644
    endforeach()
  
  endif()
- 
